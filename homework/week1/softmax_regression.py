@@ -32,7 +32,7 @@ def main():
     X = dataset.data[:, :]
     y = dataset.target[:, None]
 
-    n_kind = len(np.unique(y))
+    n_class = len(np.unique(y))
 
     X_train = X[:-100, :]
     y_train = y[:-100, :]
@@ -44,10 +44,10 @@ def main():
     X_std = np.std(X_train, axis=0)
     X_std[X_std == 0] = 1  # avoid divide by 0
 
-    w = np.zeros((X.shape[1] + 1, n_kind))
+    w = np.zeros((X.shape[1] + 1, n_class))
 
     softmax_regression = SoftmaxRegression(lr_=0.05, w_=w, X_mean=X_mean, X_std=X_std)
-    softmax_regression.fit(X_train, FunctionUtils.to_one_hot(y_train, n_kind), max_iter=500)
+    softmax_regression.fit(X_train, FunctionUtils.to_one_hot(y_train, n_class), max_iter=500)
     y_pred = FunctionUtils.from_one_hot(softmax_regression.predict(X_test))
     print('Accuracy: {}'.format(FunctionUtils.accuracy(y_pred, y_test)))
 

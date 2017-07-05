@@ -95,13 +95,13 @@ class FunctionUtils:
         return np.sum(np.round(x) == target) / float(x.shape[0])
 
     @staticmethod
-    def to_one_hot(x, dim):
+    def to_one_hot(x, n_class):
         """
         x: vector to convert to one hot representation
-        dim: one hot vector dimension
+        n_class: one hot vector dimension
         """
         n = x.shape[0]
-        one_hot = np.zeros((n, dim))
+        one_hot = np.zeros((n, n_class))
         one_hot[np.arange(n), np.ravel(x).astype(int)] = 1
         return one_hot
 
@@ -109,6 +109,5 @@ class FunctionUtils:
     def from_one_hot(X):
         """
         X: one hot representation
-        dim: one hot vector dimension
         """
         return np.argmax(X, axis=1).reshape((X.shape[0], 1))
