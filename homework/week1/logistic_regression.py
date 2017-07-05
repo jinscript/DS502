@@ -11,6 +11,9 @@ import numpy as np
 
 class LogisticRegression(BaseModel):
 
+    def setup(self, X_train, y_train):
+        self.w_ = np.zeros((X_train.shape[1] + 1, 1))
+
     def forward_pass(self, X):
         return FunctionUtils.sigmoid(np.dot(X, self.w_));
 
@@ -20,9 +23,15 @@ class LogisticRegression(BaseModel):
         """
         self.w_ -= self.lr_ / X.shape[0] * (np.dot(X.T, (y_hat - y)) + self.lambda_ * self.w_)
 
-    def prepare(self, X):
-        """ Normalize data and add bias
+    def preprocess_data(self, X, phase):
+        """ Adds bias
+            Also stores mean and std for training data
+            Use them to normalize both training and test data
         """
+        if (phase == BaseModel.PHASE_TRAIN):
+            self.X_mean = np.mean(X, axis=0)
+            self.X_std = np.std(X, axis=0)
+
         return np.c_[(X - self.X_mean) / self.X_std, np.ones((X.shape[0], 1))]
 
 def main():
@@ -44,12 +53,8 @@ def main():
     y_train = y[idx_train]
     y_test = y[idx_test]
 
-    X_mean = np.mean(X_train, axis=0)
-    X_std = np.std(X_train, axis=0)
-
-    logistic_regression = LogisticRegression(lambda_=0, lr_=0.05, w_=np.zeros((X_train.shape[1] + 1, 1)),
-                                             X_mean=X_mean, X_std=X_std)
-    logistic_regression.fit(X_train, y_train, max_iter=50000)
+    logistic_regression = LogisticRegression(lambda_=0, lr_=0.05, max_iter=50000)
+    logistic_regression.fit(X_train, y_train)
 
     print('Coefficients: {}'.format(logistic_regression.w_[0 : -1].T))
     print('Intercept: {}'.format(logistic_regression.w_[-1]))

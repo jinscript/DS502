@@ -10,4 +10,4 @@ Layout:
         week2
         ...
 
-Please follow README.md in each subdirectory
+Please follow README.md in each week's directory

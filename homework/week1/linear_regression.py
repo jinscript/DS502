@@ -11,6 +11,9 @@ import numpy as np
 
 class LinearRegression(BaseModel):
 
+    def setup(self, X_train, y_train):
+        self.w_ = np.zeros((X_train.shape[1] + 1, 1))
+
     def forward_pass(self, X):
         return np.dot(X, self.w_);
 
@@ -37,8 +40,8 @@ def main():
     y_train = y[:-20, None]
     y_test = y[-20:, None]
 
-    linear_regression = LinearRegression(lambda_=0, w_=np.zeros((X_train.shape[1] + 1, 1)))
-    linear_regression.fit(X_train, y_train, max_iter=1)
+    linear_regression = LinearRegression(lambda_=0, max_iter=1)
+    linear_regression.fit(X_train, y_train)
 
     print('Coefficients: {}'.format(linear_regression.w_[0 : -1]))
     print('Intercept: {}'.format(linear_regression.w_[-1]))
