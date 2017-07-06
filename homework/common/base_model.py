@@ -7,8 +7,8 @@ class BaseModel:
     """
     __metaclass__ = ABCMeta
 
-    PHASE_TRAIN = "TRAIN"
-    PHASE_TEST = "TEST"
+    PHASE_TRAIN = "train"
+    PHASE_TEST = "test"
 
     def __init__(self, **kwargs):
         """ Initialize model with any arguments. e.g. learning rate
@@ -24,7 +24,7 @@ class BaseModel:
         X_train = self.preprocess_data(X_train, BaseModel.PHASE_TRAIN)
         for i in xrange(self.max_iter):
             y_hat = self.forward_pass(X_train)
-            if self.stopping_criteria() == True:
+            if self.stop_criteria(X_train, y_train, y_hat) == True:
                 break
             self.backward_pass(X_train, y_train, y_hat)
 
@@ -40,7 +40,7 @@ class BaseModel:
         """
         return np.c_[X, np.ones((X.shape[0], 1))]
 
-    def stopping_criteria(self):
+    def stop_criteria(self, X_train, y_train, y_hat):
         """ Override this method if you want to do early stopping
         """
         return False

@@ -19,7 +19,7 @@ class FunctionUtils:
         x: numpy 1d array
         return: numpy 1d array after transformation
         """
-        s = sigmoid(x)
+        s = FunctionUtils.sigmoid(x)
         return s * (1 - s)
 
     @staticmethod
@@ -36,7 +36,7 @@ class FunctionUtils:
         x: numpy 1d array
         return: numpy 1d array after transformation
         """
-        cosh = np.cosh(a)
+        cosh = np.cosh(x)
         return 1 / np.square(cosh)
 
     @staticmethod
