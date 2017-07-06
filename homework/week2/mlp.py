@@ -29,8 +29,8 @@ class MLP(BaseModel):
         self.w_ = []
         self.w_.append(np.random.uniform(-1, 1, size=(n_input + 1, self.hidden_layer_sizes[0])))
 
-        for i in xrange(1, len(self.hidden_layer_sizes) - 1):
-            self.w_.append(np.random.uniform(-1, 1, size=(self.hidden_layer_sizes[i] + 1, self.hidden_layer_sizes[i + 1] + 1)))
+        for i in xrange(0, len(self.hidden_layer_sizes) - 1):
+            self.w_.append(np.random.uniform(-1, 1, size=(self.hidden_layer_sizes[i] + 1, self.hidden_layer_sizes[i + 1])))
 
         self.w_.append(np.random.uniform(-1, 1, size=(self.hidden_layer_sizes[-1] + 1, n_output)))
 
