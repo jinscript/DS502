@@ -69,15 +69,15 @@ class MLP(BaseModel):
         d_h = np.dot(d_l_d_output, self.w_[-1].T)[: , :-1]  # discard gradient for bias
         self.w_[-1] -= self.lr_ / n_train * d_w
 
-        for i in xrange(len(self.w_) - 2, 0):
+        for i in xrange(len(self.w_) - 2, 0, -1):
             d_wh = self.d_activation_func(d_h)
-            d_w = np.dot(self.h[i].T, d_wh)
+            d_w = np.dot(self.h_[i].T, d_wh)
             d_h = np.dot(d_wh, self.w_[i].T)[: , :-1]
             self.w_[i] -= self.lr_ / n_train * d_w
 
         d_wX = self.d_activation_func(d_h)
         d_w = np.dot(X.T, d_wX)
-        self.w_[0] -= self.lr_ / n_train * d_w * 1.6
+        self.w_[0] -= self.lr_ / n_train * d_w
 
     def preprocess_data(self, X, phase):
 
