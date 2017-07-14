@@ -9,8 +9,12 @@ Layout:
     * homework1
     * homework2
     * ...
+* Jason_Homework:
+    * homework1
+    * homework2
+    * ...
 
-Please follow README.md in each week's directory
+Please follow README.md in each homework's directory
 
 Dr Zhu's Homework Architecture Overview:
 
